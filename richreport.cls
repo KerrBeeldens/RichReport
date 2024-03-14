@@ -11,7 +11,7 @@
 % - hyperref
 % - caption
 % - fontawesome
-%
+% - titlesec
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{richreport}[2024/03/11 Rich documentclass for reports, intended to be used as a replacement for the 'report' document class.]
@@ -30,6 +30,7 @@
 \usepackage{xcolor}
 \definecolor{headerrule}{RGB}{255, 0, 0}
 \definecolor{captionlabel}{RGB}{0, 255, 0}
+\definecolor{sectionlabel}{RGB}{0, 0, 255}
 
 % Define how links should be displayed, among other useful settings
 \RequirePackage{hyperref}
@@ -63,8 +64,49 @@
 \fancyfoot[R]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
 }
 
+% Make sure chapter pages share the same footer as standard pages
+\fancypagestyle{plain}{
+\fancyhead[L] {}
+}
+
 % Apply the defined headers and footers
 \pagestyle{standardpage}
+
+\usepackage{titlesec}
+
+%% Change the format of chapters, sections and subsections
+% \titleformat{\chapter}[display]
+% {\sffamily\huge\bfseries}{
+% \begin{tikzpicture}[remember picture, overlay, transform shape]
+%   \node [anchor=north west, inner sep=0pt]
+%     at (current page.north west)
+%     {
+%  \begin{tikzpicture}[remember picture,overlay]
+%     \node[minimum width = 2cm, minimum height = 2cm, fill=Avans-red] at (0, -3.5cm) {\Huge\normalfont\color{white}\textbf{\S}};
+% \end{tikzpicture}
+% };
+% \end{tikzpicture}\chaptertitlename\ \thechapter}{0pt}{\Huge}
+
+
+% % this alters "before" spacing (the second length argument) to 0
+% \titlespacing*{\chapter}{0pt}{0pt}{25pt}
+
+
+\newcommand{\marginsecnumber}[1]{%
+  \makebox[0pt][r]{#1\hspace{\marginparsep}}% TODO: does this work with odd/even pages?
+}
+
+\titleformat{\section}
+  {\sffamily\Large\bfseries}
+  {\color{sectionlabel}\marginsecnumber\thesection}
+  {0pt}
+  {}
+
+\titleformat{\subsection}
+  {\sffamily\large\bfseries}
+  {\color{sectionlabel}\marginsecnumber\thesubsection}
+  {0pt}
+  {}
 
 % Format captions
 \RequirePackage{caption} % Used to get options to format captions
