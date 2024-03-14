@@ -87,27 +87,29 @@
 % chapter
 \reversemarginpar
 \newlength{\chapterboxsize}
-\setlength{\chapterboxsize}{56pt} % TODO do not hardcode this
+\setlength{\chapterboxsize}{60pt} % TODO do not hardcode this
 
 \titleformat{\chapter}[display]
 {\sffamily\huge\bfseries}{\marginpar{%
-\hspace*{\dimexpr\marginparwidth-\chapterboxsize\relax}%
+\hspace*{\marginparwidth-\chapterboxsize}%
 \colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge H\thechapter}}%
 }\chaptertitlename\ \thechapter}{0pt}{\Huge}
 
-% this alters "before" spacing (the second length argument) to 0
+% this alters "before" spacing (the second length argument) to -25pt and the "ater" spacing to (25pt)
 \titlespacing*{\chapter}{0pt}{-25pt}{25pt}
 
 \newcommand{\marginsecnumber}[1]{%
   \makebox[0pt][r]{#1\hspace{\marginparsep}}% TODO: does this work with odd/even pages?
 }
 
+% Section
 \titleformat{\section}
   {\sffamily\Large\bfseries}
   {\color{sectionlabel}\marginsecnumber\thesection}
   {0pt}
   {}
 
+% Subsection
 \titleformat{\subsection}
   {\sffamily\large\bfseries}
   {\color{sectionlabel}\marginsecnumber\thesubsection}
