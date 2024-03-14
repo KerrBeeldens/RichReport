@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % This document class is intended to be used as a replacement for the 'report' document class.
-% This package is created by Kerr Beeldens
+% This Document Class is created by Kerr Beeldens
 
 % This class is dependent on the following packages:
 % - calc
@@ -40,10 +40,8 @@
 \RequirePackage{xcolor}
 \definecolor{headerrule}{RGB}{255, 0, 0}
 \definecolor{captionlabel}{RGB}{0, 255, 0}
+\definecolor{chapterlabel}{RGB}{127, 0, 127}
 \definecolor{sectionlabel}{RGB}{0, 0, 255}
-
-% Define how links should be displayed, among other useful settings
-\RequirePackage{hyperref}
 
 % Format the header and footers
 % TODO: consider setting the footer/header geometry
@@ -84,23 +82,21 @@
 
 \usepackage{titlesec}
 
-%% Change the format of chapters, sections and subsections
-% \titleformat{\chapter}[display]
-% {\sffamily\huge\bfseries}{
-% \begin{tikzpicture}[remember picture, overlay, transform shape]
-%   \node [anchor=north west, inner sep=0pt]
-%     at (current page.north west)
-%     {
-%  \begin{tikzpicture}[remember picture,overlay]
-%     \node[minimum width = 2cm, minimum height = 2cm, fill=Avans-red] at (0, -3.5cm) {\Huge\normalfont\color{white}\textbf{\S}};
-% \end{tikzpicture}
-% };
-% \end{tikzpicture}\chaptertitlename\ \thechapter}{0pt}{\Huge}
+% Change the format of chapters, sections and subsections
 
+% chapter
+\reversemarginpar
+\newlength{\chapterboxsize}
+\setlength{\chapterboxsize}{56pt} % TODO do not hardcode this
 
-% % this alters "before" spacing (the second length argument) to 0
-% \titlespacing*{\chapter}{0pt}{0pt}{25pt}
+\titleformat{\chapter}[display]
+{\sffamily\huge\bfseries}{\marginpar{%
+\hspace*{\dimexpr\marginparwidth-\chapterboxsize\relax}%
+\colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge H\thechapter}}%
+}\chaptertitlename\ \thechapter}{0pt}{\Huge}
 
+% this alters "before" spacing (the second length argument) to 0
+\titlespacing*{\chapter}{0pt}{-25pt}{25pt}
 
 \newcommand{\marginsecnumber}[1]{%
   \makebox[0pt][r]{#1\hspace{\marginparsep}}% TODO: does this work with odd/even pages?
@@ -129,4 +125,23 @@
 % Format table captions
 \DeclareCaptionFormat{table}{\textcolor{captionlabel}{\footnotesize{\faTable}\normalsize\bf\ #1#2}#3}
 \captionsetup[table]{format=table} 
+
+% Define how links should be displayed and add PDF Metadata
+\RequirePackage[
+  colorlinks = true,
+  citecolor = blue,
+  filecolor = blue,
+  linkcolor = blue,
+  urlcolor = blue,
+  runcolor = blue,
+  % pdftitle, % TODO
+  % pdfauthor, % TODO
+  % pdfsubject, % TODO
+  % pdfkeywords, % TODO
+  % pdfcreationdate, TODO
+  % pdfmoddate, TODO
+  % pdflang?, % TODO
+  pdfcreator = Created\ using\ 'richreport'\ by\ Kerr\ Beeldens
+]{hyperref}
+
 \endinput
