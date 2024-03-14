@@ -26,8 +26,18 @@
 
 \setlength{\marginparsep}{15pt}
 
+% Define general formatting of the type
+\RequirePackage{microtype} % Improves justified content
+
+\RequirePackage{tgpagella} % Loads in the Pagella font
+\renewcommand*{\bfdefault}{bx} 
+\RequirePackage{eulervm} % Load in the EulerVM font
+
+\linespread{1.3} % 1.5 linespacing
+\setlength\parindent{0pt} % remove paragraph indentation
+
 % Define colors to be used inside the document
-\usepackage{xcolor}
+\RequirePackage{xcolor}
 \definecolor{headerrule}{RGB}{255, 0, 0}
 \definecolor{captionlabel}{RGB}{0, 255, 0}
 \definecolor{sectionlabel}{RGB}{0, 0, 255}
