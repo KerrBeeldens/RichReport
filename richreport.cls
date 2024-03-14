@@ -8,6 +8,10 @@
 % This class is dependent on the following packages:
 % - calc
 % - fancyhdr
+% - hyperref
+% - caption
+% - fontawesome
+%
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{richreport}[2024/03/11 Rich documentclass for reports, intended to be used as a replacement for the 'report' document class.]
@@ -25,6 +29,7 @@
 % Define colors to be used inside the document
 \usepackage{xcolor}
 \definecolor{headerrule}{RGB}{255, 0, 0}
+\definecolor{captionlabel}{RGB}{0, 255, 0}
 
 % Define how links should be displayed, among other useful settings
 \RequirePackage{hyperref}
@@ -32,7 +37,6 @@
 % Format the header and footers
 % TODO: consider setting the footer/header geometry
 \RequirePackage{fancyhdr}
-\RequirePackage{nameref} % Used to be able to display the current chapter with
 
 % Allow to access the current chapter with \currentchapter
 \newcommand{\currentchapter}{}
@@ -62,4 +66,15 @@
 % Apply the defined headers and footers
 \pagestyle{standardpage}
 
+% Format captions
+\RequirePackage{caption} % Used to get options to format captions
+\RequirePackage{fontawesome} % Used to get useful icons like \faCamera and \faTable
+
+% Format figure captions
+\DeclareCaptionFormat{figure}{\textcolor{captionlabel}{\footnotesize{\faCamera}\normalsize\bf\ #1#2}#3}
+\captionsetup[figure]{format=figure} 
+
+% Format table captions
+\DeclareCaptionFormat{table}{\textcolor{captionlabel}{\footnotesize{\faTable}\normalsize\bf\ #1#2}#3}
+\captionsetup[table]{format=table} 
 \endinput
