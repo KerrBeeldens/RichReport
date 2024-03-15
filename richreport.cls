@@ -12,6 +12,7 @@
 % - caption
 % - fontawesome
 % - titlesec
+% - enumitem
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{richreport}[2024/03/11 Rich documentclass for reports, intended to be used as a replacement for the 'report' document class.]
@@ -38,10 +39,19 @@
 
 % Define colors to be used inside the document
 \RequirePackage{xcolor}
-\definecolor{headerrule}{RGB}{255, 0, 0}
-\definecolor{captionlabel}{RGB}{0, 255, 0}
-\definecolor{chapterlabel}{RGB}{127, 0, 127}
-\definecolor{sectionlabel}{RGB}{0, 0, 255}
+\definecolor{headerrule}{RGB}{192, 0, 48}
+\definecolor{captionlabel}{RGB}{192, 0, 48}
+\definecolor{chapterlabel}{RGB}{192, 0, 48}
+\definecolor{sectionlabel}{RGB}{192, 0, 48}
+\definecolor{bulletlabel}{RGB}{192, 0, 48}
+
+% Set the document class options
+\DeclareOption{twocolumn}{\OptionNotUsed}
+% \DeclareOption{green}{\renewcommand{\headerrule}{\color{green}}}
+% \DeclareOption{red}{\renewcommand{\headerrule}{\color{blue}}}
+\DeclareOption{noindent}{\setlength\parindent{0pt}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+\ProcessOptions\relax
 
 % Format the header and footers
 % TODO: consider setting the footer/header geometry
@@ -87,13 +97,13 @@
 % chapter
 \reversemarginpar
 \newlength{\chapterboxsize}
-\setlength{\chapterboxsize}{60pt} % TODO do not hardcode this
+\setlength{\chapterboxsize}{57pt} % TODO do not hardcode this
 
 \titleformat{\chapter}[display]
 {\sffamily\huge\bfseries}{\marginpar{%
 \hspace*{\marginparwidth-\chapterboxsize}%
 \colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge H\thechapter}}%
-}\chaptertitlename\ \thechapter}{0pt}{\Huge}
+}\chaptertitlename\ \thechapter \vspace{-3pt}}{0pt}{\Huge}
 
 % this alters "before" spacing (the second length argument) to -25pt and the "ater" spacing to (25pt)
 \titlespacing*{\chapter}{0pt}{-25pt}{25pt}
@@ -115,6 +125,21 @@
   {\color{sectionlabel}\marginsecnumber\thesubsection}
   {0pt}
   {}
+
+% Change bullet style for level 1, 2, 3 and 4 for enumerate
+\usepackage[shortlabels]{enumitem}  
+
+% level 1
+\renewcommand{\labelenumi}{\textbf{\textcolor{bulletlabel}{\arabic*)}}}
+
+% level 2
+\renewcommand{\labelenumii}{\textbf{\textcolor{bulletlabel}{\Alph*)}}}
+
+% level 3
+\renewcommand{\labelenumiii}{\textbf{\textcolor{bulletlabel}{\Roman*)}}}
+
+% level 4
+\renewcommand{\labelenumiv}{\textbf{\textcolor{bulletlabel}{\alph*)}}}
 
 % Format captions
 \RequirePackage{caption} % Used to get options to format captions
