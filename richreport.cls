@@ -13,6 +13,10 @@
 % - fontawesome
 % - titlesec
 % - enumitem
+% - microtype
+% - tgpagella
+% - eulervm
+% - tgheros
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{richreport}[2024/03/11 Rich documentclass for reports, intended to be used as a replacement for the 'report' document class.]
@@ -25,7 +29,7 @@
 \newlength{\oddsidemargintotalwidth}
 \setlength{\oddsidemargintotalwidth}{1 in + \hoffset + \oddsidemargin}
 
-\setlength{\marginparsep}{15pt}
+\setlength{\marginparsep}{20pt}
 
 % Define general formatting of the type
 \RequirePackage{microtype} % Improves justified content
@@ -33,6 +37,7 @@
 \RequirePackage{tgpagella} % Loads in the Pagella font
 \renewcommand*{\bfdefault}{bx} 
 \RequirePackage{eulervm} % Load in the EulerVM font
+\RequirePackage{tgheros} % Load in the Heros font
 
 \linespread{1.3} % 1.5 linespacing
 \setlength\parindent{0pt} % remove paragraph indentation
@@ -90,19 +95,20 @@
 % Apply the defined headers and footers
 \pagestyle{standardpage}
 
-\usepackage{titlesec}
+\RequirePackage{titlesec}
 
 % Change the format of chapters, sections and subsections
 
 % chapter
 \reversemarginpar
 \newlength{\chapterboxsize}
-\setlength{\chapterboxsize}{57pt} % TODO do not hardcode this
+\setlength{\chapterboxsize}{52pt} % TODO do not hardcode this
+\RequirePackage{xstring} % To extract the first character of \chaptername
 
 \titleformat{\chapter}[display]
-{\sffamily\huge\bfseries}{\marginpar{%
+{\sffamily\LARGE\bfseries}{\marginpar{%
 \hspace*{\marginparwidth-\chapterboxsize}%
-\colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge H\thechapter}}%
+\colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge\StrLeft{\chaptername}{1}\thechapter}}%
 }\chaptertitlename\ \thechapter \vspace{-3pt}}{0pt}{\Huge}
 
 % this alters "before" spacing (the second length argument) to -25pt and the "ater" spacing to (25pt)
@@ -127,7 +133,7 @@
   {}
 
 % Change bullet style for level 1, 2, 3 and 4 for enumerate
-\usepackage[shortlabels]{enumitem}  
+\RequirePackage[shortlabels]{enumitem}
 
 % level 1
 \renewcommand{\labelenumi}{\textbf{\textcolor{bulletlabel}{\arabic*)}}}
