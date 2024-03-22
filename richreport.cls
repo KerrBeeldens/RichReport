@@ -95,9 +95,8 @@
 % Apply the defined headers and footers
 \pagestyle{standardpage}
 
-\RequirePackage{titlesec}
-
 % Change the format of chapters, sections and subsections
+\RequirePackage{titlesec}
 
 % chapter
 \reversemarginpar
@@ -106,10 +105,10 @@
 \RequirePackage{xstring} % To extract the first character of \chaptername
 
 \titleformat{\chapter}[display]
-{\sffamily\LARGE\bfseries}{\marginpar{%
+{\sffamily\LARGE\bfseries\marginpar{%
 \hspace*{\marginparwidth-\chapterboxsize}%
 \colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge\StrLeft{\chaptername}{1}\thechapter}}%
-}\chaptertitlename\ \thechapter \vspace{-3pt}}{0pt}{\Huge}
+}}{\chaptertitlename\ \thechapter \vspace{-3pt}}{0pt}{\Huge}
 
 % this alters "before" spacing (the second length argument) to -25pt and the "ater" spacing to (25pt)
 \titlespacing*{\chapter}{0pt}{-25pt}{25pt}
