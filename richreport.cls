@@ -64,11 +64,16 @@
 \RequirePackage{fancyhdr}
 
 % Allow to access the current chapter with \currentchapter
+\RequirePackage{silence}
+
 \newcommand{\currentchapter}{}
 \let\oldchapter\chapter
 \renewcommand{\chapter}[1]{%
+  \begingroup
+  \WarningFilter{latex}{Marginpar on page} % Suppress "Marginpar on page x moved" warning caused by chapters
   \oldchapter{#1}%
   \renewcommand{\currentchapter}{#1}%
+  \endgroup
 }
 
 \renewcommand{\headrulewidth}{0pt} % Remove the horizontal rule in the header
