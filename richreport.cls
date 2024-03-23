@@ -49,6 +49,7 @@
 \definecolor{chapterlabel}{RGB}{192, 0, 48}
 \definecolor{sectionlabel}{RGB}{192, 0, 48}
 \definecolor{bulletlabel}{RGB}{192, 0, 48}
+\definecolor{chaptertoclabel}{RGB}{192, 0, 48}
 
 % Set the document class options
 \DeclareOption{twocolumn}{\OptionNotUsed}
@@ -74,6 +75,7 @@
 \newcommand{\customfootrulewidth}{1pt} % add the horizontal rule in the footer (TODO: make this use footrulewidth)
 \setlength{\headheight}{20.00003pt} % Minimum headheight as recommended by fancyhdr
 
+% Formatting for 'standard pages' (non-standard pages would be the titlepage, ToC etc.)
 \fancypagestyle{standardpage}{
 \fancyhf{} % Remove all formatting of the fancy page style
 
@@ -85,6 +87,13 @@
 \fancyfoot[L]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
 \fancyfoot[C]{\thepage}
 \fancyfoot[R]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
+}
+
+\fancypagestyle{ToC}{
+\fancyhf{} % Remove all formatting of the fancy page style
+
+% Define the footer
+\fancyfoot[C]{\rule[0.5ex]{\textwidth}{\customfootrulewidth}}
 }
 
 % Make sure chapter pages share the same footer as standard pages
@@ -131,6 +140,49 @@
   {0pt}
   {}
 
+% Formatting the ToC
+\RequirePackage{titletoc}
+
+\makeatletter
+\renewcommand{\tableofcontents}{%
+\pagestyle{ToC}
+{\Huge\bfseries\sffamily\contentsname}
+\bigskip
+  \@starttoc{toc}
+  \newpage
+  \pagestyle{standardpage}
+}
+\makeatother
+
+% Formatting chapters in the ToC
+\newlength{\chaptertocboxsize}
+\setlength{\chaptertocboxsize}{2.4em} % TODO do not hardcode this
+
+\titlecontents{chapter}
+[0pt] 
+{\vspace{15pt}}
+{\marginpar{%
+\hspace*{\marginparwidth-\chaptertocboxsize}%
+\colorbox{chapterlabel}{\parbox[c][\chaptertocboxsize - 2\fboxsep][c]{\chaptertocboxsize - 2\fboxsep}{\centering\color{white}\bfseries\normalsize\StrLeft{\chaptername}{1}\thecontentslabel}}%
+}\bfseries\large}
+{\hspace*{-2.3em}} % When no number is given
+{\hspace{0.5em}\hfill\hspace{0.5em}\bfseries\large\pagename\contentspage}
+[\medskip]
+
+\titlecontents{section}
+[0pt] % ie, 1.5em (chapter) + 2.3em
+{}
+{\color{chaptertoclabel}\thecontentslabel\hspace{1em}}
+{\hspace*{-2.3em}}
+{\hspace{0.5em}\titlerule*[1pc]{.}\contentspage}
+
+\titlecontents{subsection}
+[2.3em] % ie, 1.5em (chapter) + 2.3em
+{}
+{\color{chaptertoclabel}\thecontentslabel\hspace{1em}}
+{\hspace*{-2.3em}}
+{\hspace{0.5em}\titlerule*[1pc]{.}\contentspage}
+
 % Change bullet style for level 1, 2, 3 and 4 for enumerate
 \RequirePackage[shortlabels]{enumitem}
 
@@ -163,7 +215,7 @@
   colorlinks = true,
   citecolor = blue,
   filecolor = blue,
-  linkcolor = blue,
+  linkcolor = black,
   urlcolor = blue,
   runcolor = blue,
   % pdftitle, % TODO
