@@ -29,7 +29,7 @@
 \newlength{\oddsidemargintotalwidth}
 \setlength{\oddsidemargintotalwidth}{1 in + \hoffset + \oddsidemargin}
 
-\setlength{\marginparsep}{20pt}
+\setlength{\marginparsep}{15pt}
 
 % Define general formatting of the type
 \RequirePackage{microtype} % Improves justified content
@@ -101,14 +101,14 @@
 % chapter
 \reversemarginpar
 \newlength{\chapterboxsize}
-\setlength{\chapterboxsize}{52pt} % TODO do not hardcode this
+\setlength{\chapterboxsize}{57pt} % TODO do not hardcode this
 \RequirePackage{xstring} % To extract the first character of \chaptername
 
 \titleformat{\chapter}[display]
 {\sffamily\LARGE\bfseries\marginpar{%
 \hspace*{\marginparwidth-\chapterboxsize}%
 \colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge\StrLeft{\chaptername}{1}\thechapter}}%
-}}{\chaptertitlename\ \thechapter \vspace{-3pt}}{0pt}{\Huge}
+}}{\chaptertitlename\ \thechapter\vspace{-3pt}}{0pt}{\Huge}
 
 % this alters "before" spacing (the second length argument) to -25pt and the "ater" spacing to (25pt)
 \titlespacing*{\chapter}{0pt}{-25pt}{25pt}
