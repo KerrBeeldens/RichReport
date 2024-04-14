@@ -166,23 +166,22 @@
 \titlecontents{chapter}
 [0pt] 
 {\vspace{15pt}}
-{\marginpar{%
-\hspace*{\marginparwidth-\chaptertocboxsize}%
-\colorbox{chapterlabel}{\parbox[c][\chaptertocboxsize - 2\fboxsep][c]{\chaptertocboxsize - 2\fboxsep}{\centering\color{white}\bfseries\normalsize\StrLeft{\chaptername}{1}\thecontentslabel}}%
-}\bfseries\large}
+{
+\colorbox{chapterlabel}{\parbox[c][\chaptertocboxsize - 2\fboxsep][c]{\chaptertocboxsize - 2\fboxsep}{\centering\color{white}\bfseries\normalsize\StrLeft{\chaptername}{1}\thecontentslabel}}\hspace{\marginparsep}%
+\bfseries\large}
 {\hspace*{-2.3em}} % When no number is given
 {\hspace{0.5em}\hfill\hspace{0.5em}\bfseries\large\pagename\contentspage}
 [\medskip]
 
 \titlecontents{section}
-[0pt] % ie, 1.5em (chapter) + 2.3em
+[\chaptertocboxsize + \marginparsep + 3pt] % ie, 1.5em (chapter) + 2.3em
 {}
 {\color{chaptertoclabel}\thecontentslabel\hspace{1em}}
 {\hspace*{-2.3em}}
 {\hspace{0.5em}\titlerule*[1pc]{.}\contentspage}
 
 \titlecontents{subsection}
-[2.3em] % ie, 1.5em (chapter) + 2.3em
+[\chaptertocboxsize + \marginparsep + 3pt + 2.3em] % ie, 1.5em (chapter) + 2.3em
 {}
 {\color{chaptertoclabel}\thecontentslabel\hspace{1em}}
 {\hspace*{-2.3em}}
