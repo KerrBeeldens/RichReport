@@ -17,6 +17,7 @@
 % - tgpagella
 % - eulervm
 % - tgheros
+% - babel
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{richreport}[2024/03/11 Rich documentclass for reports, intended to be used as a replacement for the 'report' document class.]
@@ -38,6 +39,7 @@
 \renewcommand*{\bfdefault}{bx} 
 \RequirePackage{eulervm} % Load in the EulerVM font
 \RequirePackage{tgheros} % Load in the Heros font
+\RequirePackage[english]{babel}
 
 \linespread{1.3} % 1.5 linespacing
 \setlength\parindent{0pt} % remove paragraph indentation
@@ -118,14 +120,21 @@
 \setlength{\chapterboxsize}{57pt} % TODO do not hardcode this
 \RequirePackage{xstring} % To extract the first character of \chaptername
 
+% Define a box for chapter numbers
+\newcommand{\chapterbox}[4][chapterlabel]{\colorbox{#1}{\parbox[c][#2 - 2\fboxsep][c]{#2 - 2\fboxsep}{\centering\color{white}\bf\Huge\StrLeft{#3}{1}#4}}}
+
+% Define a chapter format
+\newcommand{\chapterformat}[4][chapterlabel]{}
+
 \titleformat{\chapter}[display]
 {\sffamily\LARGE\bfseries\marginpar{%
 \hspace*{\marginparwidth-\chapterboxsize}%
-\colorbox{chapterlabel}{\parbox[c][\chapterboxsize - 2\fboxsep][c]{\chapterboxsize - 2\fboxsep}{\centering\color{white}\bf\Huge\StrLeft{\chaptername}{1}\thechapter}}%
-}}{\chaptertitlename\ \thechapter\vspace{-3pt}}{0pt}{\Huge}
+\chapterbox{\chapterboxsize}{\chaptername}{\thechapter}%
+}}{\chaptertitlename\ \thechapter}{0pt}{\Huge}
 
 % this alters "before" spacing (the second length argument) to -25pt and the "ater" spacing to (25pt)
-\titlespacing*{\chapter}{0pt}{-25pt}{25pt}
+\newcommand{\chapterskip}{25pt}
+\titlespacing*{\chapter}{0pt}{-25pt}{\chapterskip} % Todo check if -25 is back to default
 
 \newcommand{\marginsecnumber}[1]{%
   \makebox[0pt][r]{#1\hspace{\marginparsep}}% TODO: does this work with odd/even pages?
@@ -151,8 +160,12 @@
 \makeatletter
 \renewcommand{\tableofcontents}{%
 \pagestyle{ToC}
-{\Huge\bfseries\sffamily\contentsname}
-\bigskip
+{\sffamily\LARGE\bfseries\marginpar{%
+\hspace*{\marginparwidth-\chapterboxsize}%
+\chapterbox{\chapterboxsize}{X}{}}%
+Test\\[15pt] % Todo 15pt is an estimation, also change test to something better
+\contentsname}
+  \vspace{\chapterskip}
   \@starttoc{toc}
   \newpage
   \pagestyle{standardpage}
@@ -161,31 +174,33 @@
 
 % Formatting chapters in the ToC
 \newlength{\chaptertocboxsize}
-\setlength{\chaptertocboxsize}{2.4em} % TODO do not hardcode this
+\setlength{\chaptertocboxsize}{2em}
 
 \titlecontents{chapter}
 [0pt] 
-{\vspace{15pt}}
+{\vspace{10pt}}
 {
-\colorbox{chapterlabel}{\parbox[c][\chaptertocboxsize - 2\fboxsep][c]{\chaptertocboxsize - 2\fboxsep}{\centering\color{white}\bfseries\normalsize\StrLeft{\chaptername}{1}\thecontentslabel}}\hspace{\marginparsep}%
+\colorbox{chapterlabel}{\parbox[c][\chaptertocboxsize - 2\fboxsep][c]{\chaptertocboxsize - 2\fboxsep}{\centering\color{white}\bfseries{\small\StrLeft{\chaptername}{1}\thecontentslabel}}}\hspace{\marginparsep}% TODO: replace with chapterbox
 \bfseries\large}
-{\hspace*{-2.3em}} % When no number is given
+{\hspace*{-2.3em}} % When no number is given, TODO
 {\hspace{0.5em}\hfill\hspace{0.5em}\bfseries\large\pagename\contentspage}
-[\medskip]
+[\smallskip]
 
 \titlecontents{section}
-[\chaptertocboxsize + \marginparsep + 3pt] % ie, 1.5em (chapter) + 2.3em
+[\chaptertocboxsize + \marginparsep + 3pt] % TODO: why is the + 3pt needed?
 {}
 {\color{chaptertoclabel}\thecontentslabel\hspace{1em}}
 {\hspace*{-2.3em}}
-{\hspace{0.5em}\titlerule*[1pc]{.}\contentspage}
+{\hspace{0.25em}\titlerule*[0.75pc]{.}\contentspage}
 
 \titlecontents{subsection}
-[\chaptertocboxsize + \marginparsep + 3pt + 2.3em] % ie, 1.5em (chapter) + 2.3em
+[\chaptertocboxsize + \marginparsep + 3pt + 2.3em] % TODO: why is the + 3pt needed (see above) + 2.3em?
 {}
 {\color{chaptertoclabel}\thecontentslabel\hspace{1em}}
 {\hspace*{-2.3em}}
-{\hspace{0.5em}\titlerule*[1pc]{.}\contentspage}
+{\hspace{0.25em}\titlerule*[0.75pc]{.}\contentspage}
+
+% Appendix
 
 % Change bullet style for level 1, 2, 3 and 4 for enumerate
 \RequirePackage[shortlabels]{enumitem}
