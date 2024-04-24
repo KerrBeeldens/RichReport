@@ -86,7 +86,7 @@
 
 % Define the header
 \fancyheadoffset[L]{\oddsidemargintotalwidth}
-\fancyhead[L]{{\textcolor{headerrule}{\rule[-0.75em + 0.25ex]{\oddsidemargintotalwidth - \marginparsep}{2em}}\hspace{\marginparsep}}{\sffamily\chaptername\ \thechapter: \currentchapter}} % Formula for raising rule (\rule[y]{...}{x}) y = - 0.5x + 0.25em + 0.25ex)
+\fancyhead[L]{{\textcolor{headerrule}{\rule[-0.75em + 0.25ex]{\oddsidemargintotalwidth - \marginparsep}{2em}}\hspace{\marginparsep}}{\sffamily\leftmark}} % Formula for raising rule (\rule[y]{...}{x}) y = - 0.5x + 0.25em + 0.25ex)
 
 % Define the footer
 \fancyfoot[L]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
@@ -213,6 +213,10 @@
 % Format table captions
 \DeclareCaptionFormat{table}{\textcolor{captionlabel}{\footnotesize{\faTable}\normalsize\bf\ #1#2}#3}
 \captionsetup[table]{format=table} 
+
+% Format listing captions
+\DeclareCaptionFormat{lstlisting}{\textcolor{captionlabel}{\small{\faCode}\normalsize\bf\ #1#2}#3}
+\captionsetup[lstlisting]{format=lstlisting} 
 
 % Define how links should be displayed and add PDF Metadata
 \RequirePackage[
