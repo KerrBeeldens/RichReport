@@ -164,7 +164,7 @@
 \hspace*{\marginparwidth-\chapterboxsize}%
 \chapterbox{\chapterboxsize}{X}{}}%
 Test\\[15pt] % Todo 15pt is an estimation, also change test to something better
-\contentsname}
+\Huge\contentsname}
   \vspace{\chapterskip}
   \@starttoc{toc}
   \newpage
