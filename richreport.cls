@@ -36,7 +36,7 @@
 \RequirePackage{microtype} % Improves justified content
 
 \RequirePackage{tgpagella} % Loads in the Pagella font
-\renewcommand*{\bfdefault}{bx} 
+\renewcommand*{\bfdefault}{bx}
 \RequirePackage{eulervm} % Load in the EulerVM font
 \RequirePackage{tgheros} % Load in the Heros font
 \RequirePackage[english]{babel}
@@ -84,28 +84,28 @@
 
 % Formatting for 'standard pages' (non-standard pages would be the titlepage, ToC etc.)
 \fancypagestyle{standardpage}{
-\fancyhf{} % Remove all formatting of the fancy page style
+  \fancyhf{} % Remove all formatting of the fancy page style
 
-% Define the header
-\fancyheadoffset[L]{\oddsidemargintotalwidth}
-\fancyhead[L]{{\textcolor{headerrule}{\rule[-0.75em + 0.25ex]{\oddsidemargintotalwidth - \marginparsep}{2em}}\hspace{\marginparsep}}{\sffamily\leftmark}} % Formula for raising rule (\rule[y]{...}{x}) y = - 0.5x + 0.25em + 0.25ex)
+  % Define the header
+  \fancyheadoffset[L]{\oddsidemargintotalwidth}
+  \fancyhead[L]{{\textcolor{headerrule}{\rule[-0.75em + 0.25ex]{\oddsidemargintotalwidth - \marginparsep}{2em}}\hspace{\marginparsep}}{\sffamily\leftmark}} % Formula for raising rule (\rule[y]{...}{x}) y = - 0.5x + 0.25em + 0.25ex)
 
-% Define the footer
-\fancyfoot[L]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
-\fancyfoot[C]{\thepage}
-\fancyfoot[R]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
+  % Define the footer
+  \fancyfoot[L]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
+  \fancyfoot[C]{\thepage}
+  \fancyfoot[R]{\rule[0.5ex]{0.5\textwidth - 1.5em}{\customfootrulewidth}}
 }
 
 \fancypagestyle{ToC}{
-\fancyhf{} % Remove all formatting of the fancy page style
+  \fancyhf{} % Remove all formatting of the fancy page style
 
-% Define the footer
-\fancyfoot[C]{\rule[0.5ex]{\textwidth}{\customfootrulewidth}}
+  % Define the footer
+  \fancyfoot[C]{\rule[0.5ex]{\textwidth}{\customfootrulewidth}}
 }
 
 % Make sure chapter pages share the same footer as standard pages
 \fancypagestyle{plain}{
-\fancyhead[L] {}
+  \fancyhead[L] {}
 }
 
 % Apply the defined headers and footers
@@ -121,16 +121,16 @@
 \RequirePackage{xstring} % To extract the first character of \chaptername
 
 % Define a box for chapter numbers
-\newcommand{\chapterbox}[4][chapterlabel]{\colorbox{#1}{\parbox[c][#2 - 2\fboxsep][c]{#2 - 2\fboxsep}{\centering\color{white}\bf\Huge\StrLeft{#3}{1}#4}}}
+\newcommand{\chapterbox}[4][chapterlabel]{\colorbox{#1}{\parbox[c][#2 - 2\fboxsep][c]{#2 - 2\fboxsep}{\centering\color{white}\bf\Huge#4}}} % add \StrLeft{#3}{1} back after \huge and before #4
 
 % Define a chapter format
 \newcommand{\chapterformat}[4][chapterlabel]{}
 
 \titleformat{\chapter}[display]
 {\sffamily\LARGE\bfseries\marginpar{%
-\hspace*{\marginparwidth-\chapterboxsize}%
-\chapterbox{\chapterboxsize}{\chaptername}{\thechapter}%
-}}{\chaptertitlename\ \thechapter}{0pt}{\Huge}
+    \hspace*{\marginparwidth-\chapterboxsize}%
+    \chapterbox{\chapterboxsize}{\chaptername}{\thechapter}%
+  }}{\chaptertitlename\ \thechapter}{0pt}{\Huge}
 
 % this alters "before" spacing (the second length argument) to -25pt and the "ater" spacing to (25pt)
 \newcommand{\chapterskip}{25pt}
@@ -142,29 +142,29 @@
 
 % Section
 \titleformat{\section}
-  {\sffamily\Large\bfseries}
-  {\color{sectionlabel}\marginsecnumber\thesection}
-  {0pt}
-  {}
+{\sffamily\Large\bfseries}
+{\color{sectionlabel}\marginsecnumber\thesection}
+{0pt}
+{}
 
 % Subsection
 \titleformat{\subsection}
-  {\sffamily\large\bfseries}
-  {\color{sectionlabel}\marginsecnumber\thesubsection}
-  {0pt}
-  {}
+{\sffamily\large\bfseries}
+{\color{sectionlabel}\marginsecnumber\thesubsection}
+{0pt}
+{}
 
 % Formatting the ToC
 \RequirePackage{titletoc}
 
 \makeatletter
 \renewcommand{\tableofcontents}{%
-\pagestyle{ToC}
-{\sffamily\LARGE\bfseries\marginpar{%
-\hspace*{\marginparwidth-\chapterboxsize}%
-\chapterbox{\chapterboxsize}{X}{}}%
-Test\\[15pt] % Todo 15pt is an estimation, also change test to something better
-\Huge\contentsname}
+  \pagestyle{ToC}
+  {\sffamily\LARGE\bfseries\marginpar{%
+      \hspace*{\marginparwidth-\chapterboxsize}%
+      \chapterbox{\chapterboxsize}{}{\faAlignJustify}}%
+    Report\\[15pt] % Todo 15pt is an estimation, also change test to something better
+    \Huge\contentsname}
   \vspace{\chapterskip}
   \@starttoc{toc}
   \newpage
@@ -177,11 +177,11 @@ Test\\[15pt] % Todo 15pt is an estimation, also change test to something better
 \setlength{\chaptertocboxsize}{2em}
 
 \titlecontents{chapter}
-[0pt] 
+[0pt]
 {\vspace{10pt}}
 {
-\colorbox{chapterlabel}{\parbox[c][\chaptertocboxsize - 2\fboxsep][c]{\chaptertocboxsize - 2\fboxsep}{\centering\color{white}\bfseries{\small\StrLeft{\chaptername}{1}\thecontentslabel}}}\hspace{\marginparsep}% TODO: replace with chapterbox
-\bfseries\large}
+  \colorbox{chapterlabel}{\parbox[c][\chaptertocboxsize - 2\fboxsep][c]{\chaptertocboxsize - 2\fboxsep}{\centering\color{white}\bfseries{\thecontentslabel}}}\hspace{\marginparsep}% TODO: replace with chapterbox & add \small\StrLeft{\chaptername}{1} back to \bfseries{\thecontentslabel}
+  \bfseries\large}
 {\hspace*{-2.3em}} % When no number is given, TODO
 {\hspace{0.5em}\hfill\hspace{0.5em}\bfseries\large\pagename\contentspage}
 [\smallskip]
@@ -223,15 +223,15 @@ Test\\[15pt] % Todo 15pt is an estimation, also change test to something better
 
 % Format figure captions
 \DeclareCaptionFormat{figure}{\textcolor{captionlabel}{\footnotesize{\faCamera}\normalsize\bf\ #1#2}#3}
-\captionsetup[figure]{format=figure} 
+\captionsetup[figure]{format=figure}
 
 % Format table captions
 \DeclareCaptionFormat{table}{\textcolor{captionlabel}{\footnotesize{\faTable}\normalsize\bf\ #1#2}#3}
-\captionsetup[table]{format=table} 
+\captionsetup[table]{format=table}
 
 % Format listing captions
 \DeclareCaptionFormat{lstlisting}{\textcolor{captionlabel}{\small{\faCode}\normalsize\bf\ #1#2}#3}
-\captionsetup[lstlisting]{format=lstlisting} 
+\captionsetup[lstlisting]{format=lstlisting}
 
 % Define how links should be displayed and add PDF Metadata
 \RequirePackage[
